@@ -1,0 +1,597 @@
+{% load static %}
+
+{% include 'inc/head.inc.html' %}
+{% include 'inc/navbar.inc.html' %}
+
+<body>
+    <br>
+     <!-- The Modal -->
+     <div id="myModal" class="modalf">
+        <span class="close" id="closef">&times;</span>
+        <img class="modal-contentf" id="img01">
+        <div id="caption"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+                        
+            <div class="col-sm-6 justify-content-center">
+
+                <div class="row">
+                    {% if not request.GET.type %}
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=permanent">
+                            <button type="button" name="" id="" class="btn btn-outline-info btn-block">Permanent sites</button>
+
+                        </a>
+
+                    </div>
+
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=temporary">
+
+                            <button type="button" name="" id="" class="btn btn-outline-info btn-block">Temporary sites</button>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% ifequal request.GET.type 'permanent' %}
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=permanent">
+                            <button type="button" name="" id="" class="btn btn-info btn-block">Permanent sites</button>
+
+                        </a>
+
+                    </div>
+
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=temporary">
+
+                            <button type="button" name="" id="" class="btn btn-outline-info btn-block">Temporary sites</button>
+                        </a>
+                    </div>
+
+
+
+                    {% endifequal %}
+
+                    {% ifequal request.GET.type 'temporary' %}
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=permanent">
+                            <button type="button" name="" id="" class="btn btn-outline-info btn-block">Permanent sites</button>
+
+                        </a>
+
+                    </div>
+
+                    <div class="col-sm-6 py-3">
+                        <a href="show?type=temporary">
+
+                            <button type="button" name="" id="" class="btn btn-info btn-block">Temporary sites</button>
+                        </a>
+                    </div>
+
+
+                    {% endifequal %}
+                </div>
+                <div id='map' style='width: 100%; height: 700px; border-radius: 10px; cursor: pointer; border: solid 2px grey;'></div>
+    
+            </div>
+
+
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6 py-2 mt-2">
+                        <h4 class="mb-3">Place media</h4>
+                        <div class="alert alert-info" id="images_message" role="alert">
+                            Select place to see images
+                        </div>
+                        <img src="" alt="" id="image_holder" class="my-2 mb-4 radiusing" style="width: 100%; height:250px; border-radius: 5px;">
+                        
+                        
+                    </div>
+                    
+        
+                    <div class="col-sm-6 py-3">
+                        <!-- <div class="bg-info text-white p-3  mb-3" style="border-radius: 5px;">
+                            <h5 class="m-0">All {{request.GET.type}} places</h5>
+                        </div>   -->
+                        <h4 class="mb-3">Place Information</h4>
+                        <div class="alert alert-info" id="info_message" role="alert">
+                            Select place to see place info
+                        </div>
+                        
+                       
+                        <div class="p-3 mt-3 text-dark" id="main_holder" style="opacity: 0; border: solid 1px #cccccc; border-radius: 10px;">
+                     
+        
+                        
+                            
+                        
+                            <h4 class="my-0" id="name_holder"></h4>
+                            <!-- <p class="text-secondary" id="desc_holder">
+                                
+                            </p> -->
+                            <span style="opacity: 0; height:5px;" id="rating_holder"></span>
+                            <div style="display: inline;" class="ratingParent my-2" id="single_rating">
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+        
+                            </div>
+                            
+        
+                            <div class="my-2">
+                                <h5 class="text-info">Added by </h5> <h5 class="text-secondary" id="added_by_holder"></h5>
+                            </div>
+        
+                            <hr>
+        
+                            <div id="dates_con" style="display: none;">
+                                <div class="my-2">
+                                    <h6 class="text-info">Start &nbsp;<span class="text-secondary" id="start_date"></span></h6>
+                                </div>
+            
+                                <div class="my-2">
+                                    <h6 class="text-info">End &nbsp;&nbsp; <span class="text-secondary" id="end_date"></span></h6>
+                                </div>
+        
+                            </div>
+                            
+        
+        
+                            <a href="" id="link_holder">
+                                <button type="button" class="btn btn-info btn-block mt-3">More info</button>
+        
+                            </a>
+        
+                           
+        
+        <!--                      
+                            <video height="240" class="mt-3" style="width:100%" controls>
+                                <source src="" id="videooo" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video> -->
+                            
+                            
+                        </div>
+        
+                        
+        
+                        
+                    
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div style="width: 100%; height: 100px; border-radius: 10px; display: none;" id="video_div" class="mt-0">
+                            <img src="" id="video_div_img" style="width: 90%; opacity: 0.4; border-radius: 10px; border: solid 1px #cccccc; height:85px; z-index: -1; position:absolute" alt="">
+                            <a href="" id="video_div_link" style="text-decoration:none;">
+                                <i class="material-icons text-info bg-white" style="margin:8% 38%; border-radius:100%; font-size:60px; cursor: pointer; opacity: 2;" title="Watch video">play_circle_filled</i>
+                            </a>
+                            
+                        </div>
+                    </div>
+
+                  
+                    <div class="col-sm-2 px-2">
+                        <img src="" class="radiusing_change" id="holder_sec_1" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-2 px-2">
+                        <img src="" class="radiusing_change" id="holder_sec_2" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-2 px-2">
+                        <img src="" class="radiusing_change" id="holder_sec_3" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-2 px-2">
+                        <img src="" class="radiusing_change" id="holder_sec_4" style="width: 100%;" alt="">
+                    </div>
+                
+
+                    
+                </div>
+            </div>
+
+            
+    
+        </div>
+    </div>
+    
+    
+    <script>
+        var map_container = []
+
+
+        var extra_storage = {}
+
+
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [
+                
+              ]
+            };
+
+
+        {% for place in all_places %}
+
+       
+
+            geojson.features.push(
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [parseFloat('{{place.place_longitude}}'), parseFloat('{{place.place_latitude}}')]
+                    },
+                    properties: {
+                        id: '{{place.id}}',
+                        title: '{{place.place_name}}',
+                        description: '{{place.place_description}}',
+                        image: '{{place.place_image}}',
+                        type: '{{place.place_type}}'
+                    }
+                }
+
+            )
+
+            extra_storage['{{place.id}}'] = {
+                name: '{{place.place_name}}',
+                desc: '{{place.place_description}}',
+                image: 'media/{{place.place_image}}',
+                ratings: '{{place.place_ratings}}',
+                added_by: '{{place.added_by.first_name}} {{place.added_by.last_name}}',
+                start: '{{place.start_date_time}}',
+                end: '{{place.end_date_time}}',
+                type: '{{place.place_type}}',
+                img_sec_1: 'media/{{place.sec_place_1}}',
+                img_sec_2: 'media/{{place.sec_place_2}}',
+                img_sec_3: 'media/{{place.sec_place_3}}',
+                img_sec_4: 'media/{{place.sec_place_4}}',
+                video: 'media/{{place.video}}'
+            }
+
+        
+
+        {% endfor %}
+
+        console.log(geojson.features);
+
+        console.log(extra_storage);
+
+        // console.log(geojson.features)
+
+
+
+
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFhemhhc3NhbiIsImEiOiJja2QybmJkOTkxZmQwMnhxeWQ3bTRseTUwIn0.O635_fQIQv7h--atZBrb_g';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/outdoors-v11',
+            // style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-111.0937311, 39.3209801], // starting position
+            zoom: 5 // starting zoom
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+
+
+        geojson.features.forEach(function(marker) {
+
+            // create a HTML element for each feature
+            var el = document.createElement('div');
+
+            if (marker.properties.type == 'temporary') {
+                el.className = 'redmarker'
+                
+            }else{
+                el.className = 'marker';
+
+            }
+
+
+            console.log("INSIDE WORKING AREA")
+            $(el).attr('id', marker.properties.id)
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(`<img style="margin:-3px; margin-top:10px; width:220px; margin-bottom:10px; height:150px; border-radius:10px" src="media/${marker.properties.image}">`+'<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+            .addTo(map);
+        });
+
+
+        $(".marker").on('click', (event)=>{
+            $("#video_div").css({
+                'background-image': "",
+                'display': 'none'
+            });
+
+            $("#holder_sec_1").removeAttr('src');
+            $("#holder_sec_2").removeAttr('src');
+            $("#holder_sec_3").removeAttr('src');
+            $("#holder_sec_4").removeAttr('src');
+            $("#info_message").css('display', 'none');
+            $("#images_message").css('display', 'none');
+             
+            targetted_data = extra_storage[event.target.id]
+            console.log(targetted_data);
+
+            $("#main_holder").css('opacity', '1');
+
+            if (targetted_data.video != "media/") {
+                $("#video_div").css('display', 'block');
+                $("#video_div_img").attr('src', targetted_data.image);
+                $("#video_div_link").attr('href', `place/${event.target.id}?play_video=true`);
+            }
+            
+
+            $("#name_holder").text(targetted_data.name);
+            // $("#desc_holder").text(targetted_data.desc);
+            $("#image_holder").attr('src', targetted_data.image);
+            $("#holder_sec_1").attr('src', targetted_data.img_sec_1);
+            $("#holder_sec_2").attr('src', targetted_data.img_sec_2);
+            $("#holder_sec_3").attr('src', targetted_data.img_sec_3);
+            $("#holder_sec_4").attr('src', targetted_data.img_sec_4);
+            $("#rating_holder").text(targetted_data.ratings);
+            console.log(targetted_data.ratings);
+            $("#added_by_holder").text(targetted_data.added_by);
+            $("#link_holder").attr('href', `place/${event.target.id}`);
+
+
+            if (targetted_data.type=='temporary') {
+                $("#dates_con").css('display', 'block');
+                $("#start_date").text(targetted_data.start);
+                $("#end_date").text(targetted_data.end);
+                $("#single_rating").css('display', 'none');
+            }else{
+                $("#dates_con").css('display', 'none');
+                $("#single_rating").css('display', 'block');
+            }
+
+
+
+            $(document).ready(function(){
+                    let all_stars_number = parseInt($("#rating_holder").text());
+                    let current_parent = $("#single_rating");
+
+                    let all_children = current_parent.children()
+
+                    console.log(all_children);
+
+                    for (let j = 0; j < all_stars_number; j++) {
+                        let single_star = all_children[j];
+
+                        single_star.classList.remove("text-secondary");
+                        single_star.classList.add("text-warning");
+                    
+                    }
+
+                    
+
+    
+                    
+                });
+            // window.location.href = `show?place=${event.target.id}`
+            // console.log(this.properties.title)
+        });
+
+
+        $(".redmarker").on('click', (event)=>{
+            $("#video_div").css({
+                'background-image': "",
+                'display': 'none'
+            });
+
+            $("#holder_sec_1").removeAttr('src');
+            $("#holder_sec_2").removeAttr('src');
+            $("#holder_sec_3").removeAttr('src');
+            $("#holder_sec_4").removeAttr('src');
+            $("#info_message").css('display', 'none');
+            $("#images_message").css('display', 'none');
+            // $("#video_div").css('display', 'none');
+
+            
+             
+             targetted_data = extra_storage[event.target.id]
+             console.log(targetted_data);
+
+             
+ 
+             $("#main_holder").css('opacity', '1');
+             
+             if (targetted_data.video != "media/") {
+                $("#video_div").css('display', 'block');
+                $("#video_div_img").attr('src', targetted_data.image);
+                $("#video_div_link").attr('href', `place/${event.target.id}?play_video=true`);
+            }
+             
+             $("#name_holder").text(targetted_data.name);
+            //  $("#desc_holder").text(targetted_data.desc);
+             $("#image_holder").attr('src', targetted_data.image);
+             $("#holder_sec_1").attr('src', targetted_data.img_sec_1);
+             $("#holder_sec_2").attr('src', targetted_data.img_sec_2);
+             $("#holder_sec_3").attr('src', targetted_data.img_sec_3);
+             $("#holder_sec_4").attr('src', targetted_data.img_sec_4);
+             $("#rating_holder").text(targetted_data.ratings);
+             console.log(targetted_data.ratings);
+             $("#added_by_holder").text(targetted_data.added_by);
+             $("#link_holder").attr('href', `place/${event.target.id}`);
+ 
+
+             if (targetted_data.type=='temporary') {
+                $("#dates_con").css('display', 'block');
+                $("#start_date").text(targetted_data.start);
+                $("#end_date").text(targetted_data.end);
+                $("#single_rating").css('display', 'none');
+            }else{
+                $("#dates_con").css('display', 'none');
+                $("#single_rating").css('display', 'block');
+            }
+ 
+ 
+ 
+             $(document).ready(function(){
+                     let all_stars_number = parseInt($("#rating_holder").text());
+                     let current_parent = $("#single_rating");
+ 
+                     let all_children = current_parent.children()
+ 
+                     console.log(all_children);
+ 
+                     for (let j = 0; j < all_stars_number; j++) {
+                         let single_star = all_children[j];
+ 
+                         single_star.classList.remove("text-secondary");
+                         single_star.classList.add("text-warning");
+                     
+                     }
+ 
+                     
+ 
+     
+                     
+                 });
+             // window.location.href = `show?place=${event.target.id}`
+             // console.log(this.properties.title)
+         });
+
+
+
+        // new mapboxgl.Marker(el)
+        // .setLngLat(marker.geometry.coordinates)
+        // .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+        //     .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+        // .addTo(map);
+
+
+
+
+
+
+
+
+
+
+
+
+        // custom JS
+
+        function upload_img() {
+            $("#pic").click();
+        }
+
+        function readURL(input) {
+                nameFile = input.files[0].name.split(".");
+                nameFile = nameFile[nameFile.length-1];
+                console.log(nameFile);
+                if(nameFile=="jpg" || nameFile=="jpeg" || nameFile=="png"){
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#blah')
+                                .attr('src', e.target.result)
+                                .width('100%')
+                                .height(300);
+                        };
+
+                        reader.readAsDataURL(input.files[0]);
+
+
+                    }
+                }else{
+                    $("#mainDiv").load(location.href + " #mainDiv>*", "");
+                    alert("Invalid file type!");
+                }
+
+
+                
+            }
+
+
+        $("#lc_type").on('change', (e)=>{
+            var thisValue = $('#lc_type').val();
+
+            if (thisValue == "temporary") {
+                console.log("oh temp");
+                $("#end_date_container").collapse('show');
+            }else if(thisValue == "permanent"){
+                console.log("oh perm");
+                $("#end_date_container").collapse('hide');
+
+
+            }
+        })
+
+
+
+        $("#myForm").submit(()=>{
+            if ($("#lc_type").val()=="temporary" && $("#lc_end_date").val()=="") {
+                $("#lc_end_date_error").text("Please! select end date & time");
+                return false;
+            }else{
+                $("#lc_end_date_error").text("");
+                return false;
+
+            }
+
+
+        })
+
+
+
+
+            // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+
+    $(".radiusing").click(function(){
+        modal.style.display = "block";
+        modalImg.src = $(this).attr('src');
+        // modalImg.style.height = "100%";
+        // modalImg.style.width = "100%";
+        captionText.innerHTML = $(this).attr('alt');
+        // console.log(this.attr('src')); 
+    });
+
+    $(".radiusing_change").click(function(){
+        var temp = document.getElementById("image_holder").src;
+        document.getElementById("image_holder").src = $(this).attr('src');
+        $(this).attr('src', temp); 
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closef");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() { 
+        modal.style.display = "none";
+    }
+
+    document.onkeydown=function(e){
+        if (modal.style.display == "block" && e.which == 27) {
+            modal.style.display = "none";
+            return false;
+        }
+    }
+
+
+
+
+    </script>
+</body>
+</html>

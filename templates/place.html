@@ -1,0 +1,404 @@
+{% load static %}
+
+{% include 'inc/head.inc.html' %}
+{% include 'inc/navbar.inc.html' %}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="add_images" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add more Image(s)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form method="POST" action="add_sec_imgs" enctype="multipart/form-data" id="form_imgs">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" value="{{place.id}}" name="place_id" id="">
+                    <div class="row mb-3">
+
+                        {% if not place.sec_place_1 %}
+        
+                        <div class="col-sm-6 py-2">
+                            <div class="p-0" style="width:100%; margin:auto; text-align:center">
+                                <div style="border: solid 1px grey; padding:30px; border-radius:10px;">
+                                    <img id="blah2" onclick="upload_img('pic2');" style="width:100px; margin:auto; cursor:pointer; border-radius: 10px;" src="{% static 'img/add.png' %}" alt="Card image">
+                                </div>
+                            
+                                <div style="height:0px; overflow:hidden">
+                                    <input type="file" id="pic2" onchange="readURL(this, 'blah2');" name="image2">
+                
+                                </div>
+                
+                                <!-- <button type="button" class="form-control btn btn-outline-secondary" onclick="upload_img();">Choose profile img</button> -->
+                
+                            </div>
+                        
+                        </div>
+
+                        {% endif %}
+
+                        {% if not place.sec_place_2 %}
+        
+                        <div class="col-sm-6 py-2">
+                            <div class="p-0" style="width:100%; margin:auto; text-align:center">
+                                <div style="border: solid 1px grey; padding:30px; border-radius:10px;">
+                                    <img id="blah3" onclick="upload_img('pic3');" style="width:100px; margin:auto; cursor:pointer; border-radius: 10px;" src="{% static 'img/add.png' %}" alt="Card image">
+                                </div>
+                            
+                                <div style="height:0px; overflow:hidden">
+                                    <input type="file" id="pic3" onchange="readURL(this, 'blah3');" name="image3">
+                
+                                </div>
+                
+                                <!-- <button type="button" class="form-control btn btn-outline-secondary" onclick="upload_img();">Choose profile img</button> -->
+                
+                            </div>
+                        
+                        </div>
+
+                        {% endif %}
+
+                        {% if not place.sec_place_3 %}
+
+                        <div class="col-sm-6 py-2">
+                            <div class="p-0" style="width:100%; margin:auto; text-align:center">
+                                <div style="border: solid 1px grey; padding:30px; border-radius:10px;">
+                                    <img id="blah4" onclick="upload_img('pic4');" style="width:100px; margin:auto; cursor:pointer; border-radius: 10px;" src="{% static 'img/add.png' %}" alt="Card image">
+                                </div>
+                            
+                                <div style="height:0px; overflow:hidden">
+                                    <input type="file" id="pic4" onchange="readURL(this, 'blah4');" name="image4">
+                
+                                </div>
+                
+                                <!-- <button type="button" class="form-control btn btn-outline-secondary" onclick="upload_img();">Choose profile img</button> -->
+                
+                            </div>
+                        
+                        </div>
+
+                        {% endif %}
+
+                        {% if not place.sec_place_4 %}
+
+                        <div class="col-sm-6 py-2">
+                            <div class="p-0" style="width:100%; margin:auto; text-align:center">
+                                <div style="border: solid 1px grey; padding:30px; border-radius:10px;">
+                                    <img id="blah5" onclick="upload_img('pic5');" style="width:100px; margin:auto; cursor:pointer; border-radius: 10px;" src="{% static 'img/add.png' %}" alt="Card image">
+                                </div>
+                            
+                                <div style="height:0px; overflow:hidden">
+                                    <input type="file" id="pic5" onchange="readURL(this, 'blah5');" name="image5">
+                
+                                </div>
+                
+                                <!-- <button type="button" class="form-control btn btn-outline-secondary" onclick="upload_img();">Choose profile img</button> -->
+                
+                            </div>
+                        
+                        </div>
+
+                        {% endif %}
+        
+                
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="add_video" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form action="add_videos" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" value="{{place.id}}" name="place_id1" id="">
+                    <input type="file" id="video_add_opt" name="video1" onchange="check_mp4(this)" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8">
+
+                <div class="p-3 pb-0" style="border: solid 1px #cccccc; border-radius: 10px;">
+                    <div class="row">
+                        <div class="col-sm-5 py-2">
+                            <img src="media/{{place.place_image}}" class="radiusing" style="width: 100%; height:220px; border-radius: 7px;" alt="">
+                            
+                            {% if place.video %}
+                            <button type="button" id="watch_vide_btn" class="btn btn-info btn-block">Watch video</button>
+                            {% else %}
+                                {% if place.added_by == user %}
+                                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#add_video">Add video</button>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if place.added_by == user %}
+                                {% if count_sec_images < 4 %}
+                                
+                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#add_images">Add more images</button>
+                               
+                                {% endif %}
+                            {% endif %}
+                        
+                        </div>
+
+                        <div class="col-sm-7 p-2 pb-0">
+                            <h3 class="text-dark my-2">{{place.place_name}}</h3>
+                            <p class="my-2" style="font-size:20px">{{place.place_description}}</p>
+
+                            <div style="display: inline;" class="ratingParent my-2" id="single_rating">
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+                                <i class="material-icons text-secondary" style="margin-right: -7px;">star</i>
+        
+                            </div>
+                            <span style="opacity: 0;" id="rating_holder">{{place.place_ratings}}</span>
+                            <div class="my-2 mb-0">
+                                <h5 class="text-info">Added by <span class="text-secondary">{{place.added_by.first_name}} {{place.added_by.last_name}}</span></h5>
+                            </div>
+                            <hr>
+                            {% ifequal place.place_type 'temporary' %}
+                            <div>
+                                <div class="my-2">
+                                    <h6 class="text-info">Start &nbsp;<span class="text-secondary" id="start_date">{{place.start_date_time}}</span></h6>
+                                </div>
+            
+                                <div class="my-2">
+                                    <h6 class="text-info">End &nbsp;&nbsp; <span class="text-secondary" id="end_date">{{place.end_date_time}}</span></h6>
+                                </div>
+        
+                            </div>
+                            {% endifequal %}
+                        </div>
+
+                        <script>
+                            $(document).ready(function(){
+                                let all_stars_number = parseInt($("#rating_holder").text());
+                                let current_parent = $("#single_rating");
+
+                                let all_children = current_parent.children()
+
+                                console.log(all_children);
+
+                                for (let j = 0; j < all_stars_number; j++) {
+                                    let single_star = all_children[j];
+
+                                    single_star.classList.remove("text-secondary");
+                                    single_star.classList.add("text-warning");
+                                
+                                }
+                                
+                            });
+                        </script>
+                        
+
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-6 px-2">
+                        <img src="media/{{place.sec_place_1}}" class="radiusing" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-6 px-2">
+                        <img src="media/{{place.sec_place_2}}" class="radiusing" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-6 px-2">
+                        <img src="media/{{place.sec_place_3}}" class="radiusing" style="width: 100%;" alt="">
+                    </div>
+
+                    <div class="col-sm-6 px-2">
+                        <img src="media/{{place.sec_place_4}}" class="radiusing" style="width: 100%;" alt="">
+                    </div>
+                </div>
+                
+
+            </div>
+
+            <!-- The Modal -->
+            <div id="myModal" class="modalf">
+                <span class="close" id="closef">&times;</span>
+                <img class="modal-contentf" id="img01">
+                <div id="caption"></div>
+            </div>
+
+            <div id="myModalvideo" class="modalf">
+                <span class="close" id="closeff">&times;</span>
+                <!-- <img class="modal-contentf" id="img01"> -->
+                <div class="modal-contentf">
+                    <video id="myVideo" style="width: 100%; height: 100%;" controls {% if request.GET.play_video %}autoplay{% endif %}>
+                        <source src="media/{{place.video}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div id="caption"></div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+
+<script>
+   function upload_img(target_id) {
+        $("#"+target_id).click();
+    }
+
+
+  function check_mp4(input){
+        nameFile = input.files[0].name.split(".");
+        extension = nameFile[nameFile.length-1];
+        if (extension != "mp4") {
+            alert("Invalid file type, kindly choose the video only!");
+            input.value = "";
+        }     
+  }
+
+  function readURL(input, target_id) {
+        nameFile = input.files[0].name.split(".");
+        nameFile = nameFile[nameFile.length-1];
+        console.log(nameFile);
+        if(nameFile=="jpg" || nameFile=="jpeg" || nameFile=="png"){
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    if (target_id=='blah') {
+                      $('#'+target_id)
+                        .attr('src', e.target.result)
+                        .width('100%')
+                        .height(350);
+                      
+                    }else{
+                      $('#'+target_id)
+                        .attr('src', e.target.result)
+                        .width('100%')
+                        .height(200);
+
+                    }
+                    
+                  };
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }else{
+            $("#mainDiv").load(location.href + " #mainDiv>*", "");
+            alert("Invalid file type!");
+        }
+        
+    }
+
+
+    $("#form_imgs").submit(function(){
+
+        var img_1 = document.getElementById("pic2").files.length === 0;
+        var img_2 = document.getElementById("pic3").files.length === 0;
+        var img_3 = document.getElementById("pic4").files.length === 0;
+        var img_4 = document.getElementById("pic5").files.length === 0;
+
+        if (img_1 && img_2 && img_3 && img_4) {
+            alert("Kindly add image before submitting form!");
+            return false;
+        }else{
+            return true;
+        }
+
+    });
+
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    
+
+    $(".radiusing").click(function(){
+        modal.style.display = "block";
+        modalImg.src = $(this).attr('src');
+        // modalImg.style.height = "100%";
+        // modalImg.style.width = "100%";
+        captionText.innerHTML = $(this).attr('alt');
+        // console.log(this.attr('src')); 
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closef");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() { 
+        console.log("cancel it");
+        modal.style.display = "none";
+    }
+
+    document.onkeydown=function(e){
+        if ((document.getElementById('myModalvideo').style.display=='block' || modal.style.display == "block") && e.which == 27) {
+            $("#myModalvideo").css('display', 'none');
+            console.log("cancel it");
+            modal.style.display = "none";
+            document.getElementById("myVideo").pause();
+            return false;
+        }
+    }
+
+    $("#closeff").click(function(){
+        document.getElementById("myVideo").pause();
+        $("#myModalvideo").css('display', 'none');
+    });
+
+    if ('{{ request.GET.play_video }}'.trim()=='true') {
+        console.log("play video");
+        $("#myModalvideo").css('display', 'block');
+    }
+
+    $("#watch_vide_btn").click(function(){
+        document.getElementById("myVideo").play();
+        $("#myModalvideo").css('display', 'block');
+        
+    });
+
+
+</script>

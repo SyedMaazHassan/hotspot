@@ -1,0 +1,187 @@
+<!-- <div class="myNav bg-info" style="height: 70px;">
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-sm-3 bg-secondary">
+                <i class="material-icons mb-3 text-info bg-white float-left mr-3" style="border-radius: 100%; padding:5px; font-size:30px; cursor: pointer;" title="Go back" onclick="window.history.back()">keyboard_arrow_left</i>
+                {% if user.is_authenticated %}
+
+                    <h4 class="text-white">Hi {{ user.first_name }}</h4>
+
+
+                {% else %}
+
+                    <h4 class="text-white mt-1">H<span style="font-size: 18px;">OT</span>S<span style="font-size: 18px;">POT</span></h4>
+
+                {% endif %}
+                
+            </div>
+            <div class="col-sm-1">
+                <button class="btn bg-white btn-block">Home</button>
+
+            </div>
+
+            <div class="col-sm-2">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-block bg-white dropdown-toggle" data-toggle="dropdown">
+                      Add site
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="add?type=permanent">Permanent</a>
+                      <a class="dropdown-item" href="add?type=temporary">Temporary</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+
+            <div class="col-sm-1">
+                <a href="{% url 'logout' %}" onclick="return confirm('Are you sure, you want to logout ?')">
+                    <button class="btn btn-block bg-white">Logout</button>
+                </a>
+            </div>
+
+            <div class="col-sm-1">
+                <a href="{% url 'myplaces' %}">
+                    <button class="btn btn-block bg-white">My sites</button>
+                </a>
+            </div>
+
+          
+
+        
+
+
+            {% else %}
+
+            <div class="col-sm-1">
+                <a href="login">
+                    <button class="btn btn-block bg-white">Login</button>
+                </a>
+            </div>
+
+            <div class="col-sm-1">
+                <a href="signup">
+                    <button class="btn btn-block bg-white">Signup</button>
+                </a>
+            </div>
+
+
+            {% endif %}
+
+           
+
+           
+        </div>
+
+        
+
+     
+
+        
+
+
+
+    
+
+    </div>
+        
+
+</div>
+ -->
+
+
+
+<nav class="navbar navbar-expand-md bg-info navbar-dark">
+    <div class="container">
+        <i class="material-icons mb-3 text-info bg-white float-left mt-3 mr-3" style="border-radius: 100%; padding:5px; font-size:30px; cursor: pointer;" title="Go back" onclick="window.history.back()">keyboard_arrow_left</i>
+
+        <a class="navbar-brand text-left" href="{% url 'index' %}">
+            {% if user.is_authenticated %}
+
+                <h4 class="text-white">Hi {{ user.first_name }}</h4>
+
+
+            {% else %}
+
+                <h4 class="text-white mt-1">H<span style="font-size: 18px;">OT</span>S<span style="font-size: 18px;">POT</span></h4>
+
+            {% endif %}
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div>
+            <div class="collapse navbar-collapse float-right text-right" style="margin: auto;" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                  
+                
+                  <li class="nav-item m-1">
+                  
+                      <div class="dropdown">
+                          <button type="button" class="btn btn-block mx-3 bg-white dropdown-toggle" data-toggle="dropdown">
+                            Add site
+                          </button>
+                          <div class="dropdown-menu mx-3">
+                            <a class="dropdown-item" href="add?type=permanent">Permanent</a>
+                            <a class="dropdown-item" href="add?type=temporary">Temporary</a>
+                          </div>
+                      </div>
+                    
+                  </li>
+      
+                      {% if user.is_authenticated %}
+          
+                      <li class="nav-item m-1">
+                          <a href="{% url 'myplaces' %}">
+                              <button class="btn btn-block mx-3 bg-white">My sites</button>
+                          </a>
+                      </li>
+          
+                    
+                      <li class="nav-item m-1">
+                          <a href="{% url 'logout' %}" onclick="return confirm('Are you sure, you want to logout ?')">
+                              <button class="btn btn-block mx-3 bg-white">Logout</button>
+                          </a>
+          
+                      </li>
+                          
+          
+          
+          
+                      {% else %}
+          
+                      <li class="nav-item m-1">
+                          <a href="login">
+                              <button class="btn btn-block mx-3 bg-white">Login</button>
+                          </a>
+          
+                      </li>
+          
+                      <li class="nav-item m-1">
+                          <a href="signup">
+                              <button class="btn btn-block mx-3 bg-white">Signup</button>
+                          </a>
+          
+                      </li>
+                     
+          
+                     
+          
+          
+          
+          
+                      {% endif %}
+                       
+                </ul>
+                
+              </div> 
+        </div>
+        
+    </div>
+    
+  </nav>
+
+
+
+
+

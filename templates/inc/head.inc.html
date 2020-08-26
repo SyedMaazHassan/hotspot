@@ -1,0 +1,231 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add and show places</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
+    <!-- icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- <script src="{% static 'matrix/test/utils.js' %}"></script> -->
+
+
+    <base href="http://127.0.0.1:8000/">
+
+    <style>
+        .myNav .btn{
+            font-size: 13px;
+        }
+
+        .my-form {
+            text-align: center;
+            border: solid 1px #cccccc;
+            border-radius: 5px;
+            padding: 50px;
+        }
+
+        select { 
+            padding:10px;
+            width: 10em 
+        }
+
+        .field {
+            height: 50px;
+            width: 350px;
+            margin: 20px 0px;
+            font-size: 11pt;
+            padding: 8px 15px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .profile {
+            background-color: #ffffff;
+            border-radius: 5px;
+            text-align: center;
+            border: solid 1px #cccccc;
+        }
+
+        .redmarker{
+            background-image: url('../../static/img/show_img_red.png');
+            background-size: cover;
+            width: 40px;
+            height: 60px;
+            /* border-radius: 50%; */
+            /* border: solid 1px grey; */
+            cursor: pointer;
+
+        }
+
+        .radiusing{
+            border-radius: 7px;
+            height: 140px;
+            margin-bottom: 15px;
+            border: solid 1px #cccccc;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .radiusing:hover{
+            opacity: 0.7;
+        }
+
+        .radiusing_change{
+            border-radius: 7px;
+            height: 85px;
+            margin-bottom: 15px;
+            border: solid 1px #cccccc;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .radiusing_change:hover{
+            opacity: 0.7;
+        }
+
+        .marker {
+                background-image: url('../../static/img/show_img_1.png');
+                background-size: cover;
+                width: 40px;
+                height: 60px;
+                /* border-radius: 50%; */
+                /* border: solid 1px grey; */
+                cursor: pointer;
+            }
+
+            .mapboxgl-popup {
+                max-width: 200px;
+            }
+
+            .mapboxgl-popup-content {
+                text-align: center;
+                font-family: 'Open Sans', sans-serif;
+            }
+
+        
+        /* The Modal (background) */
+        .modalf {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 100; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-contentf {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-contentf, #caption {  
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+        from {-webkit-transform:scale(0)} 
+        to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+        from {transform:scale(0)} 
+        to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+        .modal-contentf {
+            width: 100%;
+        }
+        }
+
+
+        @media only screen and (max-width: 500px) {
+            .abc{
+            padding-right: 40px;
+            }
+
+            .my-form {
+                padding: 0px;
+                width: 100%;
+                border: none;
+                margin-left: 20px;
+            }
+            
+            .field {
+                width: 100%;
+            }
+
+        }
+    </style>
+
+</head>
+
