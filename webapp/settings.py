@@ -26,17 +26,17 @@ SECRET_KEY = '_&sq3ob8taqq6trc5jyy@*7f8qu-c@nydvr-s2fnda$%x)t^6x'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
 
-# ALLOWED_HOSTS = ["hotspot-new.herokuapp.com"]
-# ALLOWED_HOSTS = ["127.0.0.1"]
-# ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ["hotspot-new.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'application.apps.ApplicationConfig',
+    'application',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -173,6 +173,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
